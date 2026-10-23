@@ -1,0 +1,14 @@
+.card {
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    background-color: #595672;
+    border-radius: 5px;
+}
+
+.label {
+    color: #fff;
+    font-size: 16px;
+    padding: 20px;
+    margin: 10px
+}

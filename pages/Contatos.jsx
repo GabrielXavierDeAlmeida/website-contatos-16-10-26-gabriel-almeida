@@ -1,119 +1,115 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 
-import api from "../api/api"; 
+import api from "../api/api";
 
- 
+import "../styles/site.css"
 
-export default function Contatos() { 
 
-  const [contatos, setContatos] = useState([]); 
 
-  const [nome, setNome] = useState(""); 
+export default function Contatos() {
 
-  const [email, setEmail] = useState(""); 
+  const [contatos, setContatos] = useState([]);
 
- 
+  const [nome, setNome] = useState("");
 
-  async function carregarContatos() { 
+  const [email, setEmail] = useState("");
 
-    try { 
 
-      const res = await api.get("/contatos"); 
 
-      setContatos(res.data); 
+  async function carregarContatos() {
 
-    } catch { 
+    try {
 
-      alert("Erro ao carregar contatos. Faça login novamente."); 
+      const res = await api.get("/contatos");
 
-    } 
+      setContatos(res.data);
 
-  } 
+    } catch {
 
- 
+      alert("Erro ao carregar contatos. Faça login novamente.");
 
-  async function criarContato(e) { 
+    }
 
-    e.preventDefault(); 
+  }
 
-    try { 
 
-      await api.post("/contatos", { nome, email }); 
 
-      setNome(""); 
+  async function criarContato(e) {
 
-      setEmail(""); 
+    e.preventDefault();
+
+    try {
+
+      await api.post("/contatos", { nome, email });
+
+      setNome("");
+
+      setEmail("");
 
       carregarContatos(); // atualiza a lista 
 
-    } catch { 
+    } catch {
 
-      alert("Erro ao criar contato"); 
+      alert("Erro ao criar contato");
 
-    } 
+    }
 
-  } 
+  }
 
- 
 
-  useEffect(() => { 
 
-    carregarContatos(); 
+  useEffect(() => {
 
-  }, []); 
+    carregarContatos();
 
- 
+  }, []);
 
-  return ( 
 
-    <div style={{ padding: 20 }}> 
 
-      <h2>Contatos</h2> 
+  return (
 
-      <form onSubmit={criarContato}> 
+    <div style={{ padding: 20 }}>
 
-        <input 
+      <h2>Contatos</h2>
 
-          placeholder="Nome" 
+      <form onSubmit={criarContato}>
 
-          value={nome} 
+        <input
 
-          onChange={(e) => setNome(e.target.value)} 
+          placeholder="Nome"
 
-        /> 
+          value={nome}
 
-        <input 
+          onChange={(e) => setNome(e.target.value)}
 
-          placeholder="E-mail" 
+        />
 
-          value={email} 
+        <input
 
-          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="E-mail"
 
-        /> 
+          value={email}
 
-        <button type="submit">Adicionar</button> 
+          onChange={(e) => setEmail(e.target.value)}
 
-      </form> 
+        />
 
- 
+        <button type="submit">Adicionar</button>
 
-      <ul> 
+      </form>
 
-        {contatos.map((c) => ( 
+      <div>
+        {contatos.map((c) => (
+          <div key={c._id} className="card">
+            <sapn className="label">{c.nome}</sapn> 
+            <sapn className="label">{c.email}</sapn>
+            
+          </div>
+        ))}
+      </div>
 
-          <li key={c._id}> 
+    </div>
 
-            {c.nome} - {c.email} 
-
-          </li> 
-
-        ))} 
-
-      </ul> 
-
-    </div> 
-
-  ); 
+  );
 
 } 
